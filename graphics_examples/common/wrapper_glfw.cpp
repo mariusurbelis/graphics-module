@@ -58,7 +58,7 @@ GLWrapper::GLWrapper(int width, int height, const char *title) {
 	}
 
 	/* Can set the Window title at a later time if you wish*/
-	glfwSetWindowTitle(window, "Hello Graphics (again)");
+	glfwSetWindowTitle(window, "3D Cube Transforms");
 
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, true);
 }

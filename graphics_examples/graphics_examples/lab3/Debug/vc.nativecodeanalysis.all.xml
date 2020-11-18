@@ -1,0 +1,422 @@
+﻿<?xml version="1.0" encoding="utf-8"?><DEFECTS><DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+      <FILENAME>cube.cpp</FILENAME>
+      <LINE>15</LINE>
+      <COLUMN>6</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'Cube::positionBufferObject' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>Cube::{ctor}</FUNCTION>
+    <DECORATED>??0Cube@@QAE@XZ</DECORATED>
+    <FUNCLINE>15</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>Cube::positionBufferObject</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+      <FILENAME>sphere.cpp</FILENAME>
+      <LINE>16</LINE>
+      <COLUMN>8</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'Sphere::sphereBufferObject' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>Sphere::{ctor}</FUNCTION>
+    <DECORATED>??0Sphere@@QAE@XZ</DECORATED>
+    <FUNCLINE>16</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>Sphere::sphereBufferObject</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+      <FILENAME>sphere.cpp</FILENAME>
+      <LINE>117</LINE>
+      <COLUMN>8</COLUMN>
+    </SFA>
+    <DEFECTCODE>6283</DEFECTCODE>
+    <DESCRIPTION>'pVertices' is allocated with array new [], but deleted with scalar delete.</DESCRIPTION>
+    <FUNCTION>Sphere::makeSphere</FUNCTION>
+    <DECORATED>?makeSphere@Sphere@@QAEXII@Z</DECORATED>
+    <FUNCLINE>31</FUNCLINE>
+    <PATH>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>43</LINE>
+        <COLUMN>22</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>117</LINE>
+        <COLUMN>8</COLUMN>
+      </SFA>
+    </PATH>
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+      <FILENAME>sphere.cpp</FILENAME>
+      <LINE>116</LINE>
+      <COLUMN>8</COLUMN>
+    </SFA>
+    <DEFECTCODE>6283</DEFECTCODE>
+    <DESCRIPTION>'pColours' is allocated with array new [], but deleted with scalar delete.</DESCRIPTION>
+    <FUNCTION>Sphere::makeSphere</FUNCTION>
+    <DECORATED>?makeSphere@Sphere@@QAEXII@Z</DECORATED>
+    <FUNCLINE>31</FUNCLINE>
+    <PATH>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>44</LINE>
+        <COLUMN>21</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>116</LINE>
+        <COLUMN>8</COLUMN>
+      </SFA>
+    </PATH>
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+      <FILENAME>sphere.cpp</FILENAME>
+      <LINE>115</LINE>
+      <COLUMN>8</COLUMN>
+    </SFA>
+    <DEFECTCODE>6283</DEFECTCODE>
+    <DESCRIPTION>'pindices' is allocated with array new [], but deleted with scalar delete.</DESCRIPTION>
+    <FUNCTION>Sphere::makeSphere</FUNCTION>
+    <DECORATED>?makeSphere@Sphere@@QAEXII@Z</DECORATED>
+    <FUNCLINE>31</FUNCLINE>
+    <PATH>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>76</LINE>
+        <COLUMN>20</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>115</LINE>
+        <COLUMN>8</COLUMN>
+      </SFA>
+    </PATH>
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+      <FILENAME>sphere.cpp</FILENAME>
+      <LINE>107</LINE>
+      <COLUMN>17</COLUMN>
+    </SFA>
+    <DEFECTCODE>6386</DEFECTCODE>
+    <DESCRIPTION>Buffer overrun while writing to 'pindices':  the writable size is 'numindices*4' bytes, but '8' bytes might be written.</DESCRIPTION>
+    <FUNCTION>Sphere::makeSphere</FUNCTION>
+    <DECORATED>?makeSphere@Sphere@@QAEXII@Z</DECORATED>
+    <FUNCLINE>31</FUNCLINE>
+    <PROBABILITY>1</PROBABILITY>
+    <RANK>4</RANK>
+    <CATEGORY>
+      <RULECATEGORY>mspft</RULECATEGORY>
+    </CATEGORY>
+    <PATH>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>33</LINE>
+        <COLUMN>8</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>33</LINE>
+        <COLUMN>11</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>35</LINE>
+        <COLUMN>8</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>38</LINE>
+        <COLUMN>19</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>39</LINE>
+        <COLUMN>15</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>40</LINE>
+        <COLUMN>16</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>43</LINE>
+        <COLUMN>8</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>44</LINE>
+        <COLUMN>8</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>45</LINE>
+        <COLUMN>15</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>48</LINE>
+        <COLUMN>8</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>48</LINE>
+        <COLUMN>15</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>50</LINE>
+        <COLUMN>18</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>51</LINE>
+        <COLUMN>22</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>52</LINE>
+        <COLUMN>22</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>53</LINE>
+        <COLUMN>22</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>48</LINE>
+        <COLUMN>31</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>48</LINE>
+        <COLUMN>15</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>57</LINE>
+        <COLUMN>13</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>58</LINE>
+        <COLUMN>13</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>59</LINE>
+        <COLUMN>13</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>60</LINE>
+        <COLUMN>13</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>63</LINE>
+        <COLUMN>13</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>64</LINE>
+        <COLUMN>13</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>65</LINE>
+        <COLUMN>13</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>66</LINE>
+        <COLUMN>13</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>69</LINE>
+        <COLUMN>13</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>70</LINE>
+        <COLUMN>13</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>71</LINE>
+        <COLUMN>13</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>72</LINE>
+        <COLUMN>13</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>75</LINE>
+        <COLUMN>8</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>76</LINE>
+        <COLUMN>7</COLUMN>
+        <KEYEVENT>
+          <ID>1</ID>
+          <KIND>declaration</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'pindices' is an array of 1 elements (4 bytes)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>79</LINE>
+        <COLUMN>8</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>82</LINE>
+        <COLUMN>8</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>82</LINE>
+        <COLUMN>15</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>86</LINE>
+        <COLUMN>19</COLUMN>
+        <KEYEVENT>
+          <ID>2</ID>
+          <KIND>declaration</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'index' may equal 1</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>88</LINE>
+        <COLUMN>8</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>89</LINE>
+        <COLUMN>8</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>89</LINE>
+        <COLUMN>15</COLUMN>
+        <KEYEVENT>
+          <ID>3</ID>
+          <KIND>branch</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Skip this loop, (assume 'j&lt;numlats-2' is false)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>103</LINE>
+        <COLUMN>8</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>103</LINE>
+        <COLUMN>29</COLUMN>
+        <KEYEVENT>
+          <ID>4</ID>
+          <KIND>branch</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Skip this loop, (assume 'i&gt;((numvertices-numlongs-2))' is false)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+        <FILENAME>sphere.cpp</FILENAME>
+        <LINE>107</LINE>
+        <COLUMN>17</COLUMN>
+        <KEYEVENT>
+          <ID>5</ID>
+          <KIND>usage</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>Invalid write to 'pindices[1]', (writable range is 0 to 0)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+    </PATH>
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\Marius\Desktop\DEV\Graphics Module\graphics_examples\common\</FILEPATH>
+      <FILENAME>wrapper_glfw.cpp</FILENAME>
+      <LINE>19</LINE>
+      <COLUMN>11</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'GLWrapper::renderer' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>GLWrapper::{ctor}</FUNCTION>
+    <DECORATED>??0GLWrapper@@QAE@HHPBD@Z</DECORATED>
+    <FUNCLINE>19</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>GLWrapper::renderer</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT></DEFECTS>

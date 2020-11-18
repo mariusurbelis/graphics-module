@@ -88,8 +88,8 @@ void init(GLWrapper *glw)
 	aspect_ratio = 1.3333f;
 	colourmode = 0; emitmode = 0;
 	attenuationmode = 1; // Attenuation is on by default
-	numlats = 40;		// Number of latitudes in our sphere
-	numlongs = 40;		// Number of longitudes in our sphere
+	numlats = 60;		// Number of latitudes in our sphere
+	numlongs = 60;		// Number of longitudes in our sphere
 
 	// Generate index (name) for one vertex array object
 	glGenVertexArrays(1, &vao);
@@ -284,6 +284,13 @@ static void keyCallback(GLFWwindow* window, int key, int s, int action, int mods
 	if (key == 'O') vz -= 1.f;
 	if (key == 'P') vz += 1.f;
 
+	if (key == GLFW_KEY_SPACE && action != GLFW_PRESS)
+	{
+		angle_inc_x = 0;
+		angle_inc_y = 0;
+		angle_inc_z = 0;
+	}
+
 	if (key == 'M' && action != GLFW_PRESS)
 	{
 		colourmode = !colourmode;
@@ -308,7 +315,8 @@ static void keyCallback(GLFWwindow* window, int key, int s, int action, int mods
 /* Entry point of program */
 int main(int argc, char* argv[])
 {
-	GLWrapper *glw = new GLWrapper(1024, 768, "Position light example");;
+	//GLWrapper* glw = new GLWrapper(1024, 768, "Position light example");;
+	GLWrapper *glw = new GLWrapper(1920 * 1.5f, 1080 * 1.5f, "Lab 4");;
 
 	if (!ogl_LoadFunctions())
 	{

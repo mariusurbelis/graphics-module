@@ -7,7 +7,7 @@
 
 #include "wrapper_glfw.h"
 
-/* Inlcude some standard headers */
+  /* Inlcude some standard headers */
 
 #include <iostream>
 #include <fstream>
@@ -16,7 +16,7 @@
 using namespace std;
 
 /* Constructor for wrapper object */
-GLWrapper::GLWrapper(int width, int height, const char *title) {
+GLWrapper::GLWrapper(int width, int height, const char* title) {
 
 	this->width = width;
 	this->height = height;
@@ -25,7 +25,7 @@ GLWrapper::GLWrapper(int width, int height, const char *title) {
 	this->running = true;
 
 	/* Initialise GLFW and exit if it fails */
-	if (!glfwInit()) 
+	if (!glfwInit())
 	{
 		cout << "Failed to initialize GLFW." << endl;
 		exit(EXIT_FAILURE);
@@ -40,7 +40,7 @@ GLWrapper::GLWrapper(int width, int height, const char *title) {
 #endif
 
 	window = glfwCreateWindow(width, height, title, 0, 0);
-	if (!window){
+	if (!window) {
 		cout << "Could not open GLFW window." << endl;
 		glfwTerminate();
 		exit(EXIT_FAILURE);
@@ -58,7 +58,7 @@ GLWrapper::GLWrapper(int width, int height, const char *title) {
 	}
 
 	/* Can set the Window title at a later time if you wish*/
-	glfwSetWindowTitle(window, "3D Cube Transforms");
+	glfwSetWindowTitle(window, "Assignment One - Marius Urbelis");
 
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, true);
 }
@@ -85,10 +85,10 @@ void GLWrapper::DisplayVersion()
 	glGetIntegerv(GL_MAJOR_VERSION, &major);
 	glGetIntegerv(GL_MAJOR_VERSION, &minor);
 	cout << "OpenGL Version = " << major << "." << minor << endl;
-	
+
 	/* A more detailed way to the version strings*/
 	cout << "Vendor: " << glGetString(GL_VENDOR) << endl;
-    cout << "Version:" << glGetString(GL_VERSION) << endl;
+	cout << "Version:" << glGetString(GL_VERSION) << endl;
 	cout << "Renderer:" << glGetString(GL_RENDERER) << endl;
 }
 
@@ -140,10 +140,10 @@ void GLWrapper::setKeyCallback(void(*func)(GLFWwindow* window, int key, int scan
 
 
 /* Build shaders from strings containing shader source code */
-GLuint GLWrapper::BuildShader(GLenum eShaderType, const string &shaderText)
+GLuint GLWrapper::BuildShader(GLenum eShaderType, const string& shaderText)
 {
 	GLuint shader = glCreateShader(eShaderType);
-	const char *strFileData = shaderText.c_str();
+	const char* strFileData = shaderText.c_str();
 	glShaderSource(shader, 1, &strFileData, NULL);
 
 	glCompileShader(shader);
@@ -153,19 +153,19 @@ GLuint GLWrapper::BuildShader(GLenum eShaderType, const string &shaderText)
 	if (status == GL_FALSE)
 	{
 		// Output the compile errors
-		
+
 		GLint infoLogLength;
 		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLength);
 
-		GLchar *strInfoLog = new GLchar[infoLogLength + 1];
+		GLchar* strInfoLog = new GLchar[infoLogLength + 1];
 		glGetShaderInfoLog(shader, infoLogLength, NULL, strInfoLog);
 
-		const char *strShaderType = NULL;
+		const char* strShaderType = NULL;
 		switch (eShaderType)
 		{
-			case GL_VERTEX_SHADER: strShaderType = "vertex"; break;
-			case GL_GEOMETRY_SHADER: strShaderType = "geometry"; break;
-			case GL_FRAGMENT_SHADER: strShaderType = "fragment"; break;
+		case GL_VERTEX_SHADER: strShaderType = "vertex"; break;
+		case GL_GEOMETRY_SHADER: strShaderType = "geometry"; break;
+		case GL_FRAGMENT_SHADER: strShaderType = "fragment"; break;
 		}
 
 		cerr << "Compile error in " << strShaderType << "\n\t" << strInfoLog << endl;
@@ -178,7 +178,7 @@ GLuint GLWrapper::BuildShader(GLenum eShaderType, const string &shaderText)
 }
 
 /* Read a text file into a string*/
-string GLWrapper::readFile(const char *filePath)
+string GLWrapper::readFile(const char* filePath)
 {
 	string content;
 	ifstream fileStream(filePath, ios::in);
@@ -199,7 +199,7 @@ string GLWrapper::readFile(const char *filePath)
 }
 
 /* Load vertex and fragment shader and return the compiled program */
-GLuint GLWrapper::LoadShader(const char *vertex_path, const char *fragment_path)
+GLuint GLWrapper::LoadShader(const char* vertex_path, const char* fragment_path)
 {
 	GLuint vertShader, fragShader;
 
@@ -242,7 +242,7 @@ GLuint GLWrapper::BuildShaderProgram(string vertShaderStr, string fragShaderStr)
 		vertShader = BuildShader(GL_VERTEX_SHADER, vertShaderStr);
 		fragShader = BuildShader(GL_FRAGMENT_SHADER, fragShaderStr);
 	}
-	catch (exception &e)
+	catch (exception& e)
 	{
 		cout << "Exception: " << e.what() << endl;
 		throw exception("BuildShaderProgram() Build shader failure. Abandoning");
@@ -257,18 +257,18 @@ GLuint GLWrapper::BuildShaderProgram(string vertShaderStr, string fragShaderStr)
 	glGetProgramiv(program, GL_LINK_STATUS, &status);
 	if (status == GL_FALSE)
 	{
-		
+
 		GLint infoLogLength;
 		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLength);
 
-		GLchar *strInfoLog = new GLchar[infoLogLength + 1];
+		GLchar* strInfoLog = new GLchar[infoLogLength + 1];
 		glGetProgramInfoLog(program, infoLogLength, NULL, strInfoLog);
 		cerr << "Linker error: " << strInfoLog << endl;
 
 		delete[] strInfoLog;
 		throw runtime_error("Shader could not be linked.");
 	}
-	
+
 	glDeleteShader(vertShader);
 	glDeleteShader(fragShader);
 

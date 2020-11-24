@@ -32,10 +32,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="poslight.frag">
+    <None Include="assignment.frag">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="poslight.vert">
+    <None Include="assignment.vert">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>

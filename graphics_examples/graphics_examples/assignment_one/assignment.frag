@@ -13,11 +13,12 @@ out vec4 outputColor;
 
 // These are the uniforms that are defined in the application
 uniform uint colourmode, emitmode, attenuationmode;
+uniform float sunPower;
 
 // Global constants (for this vertex shader)
 vec3 specular_albedo = vec3(1.0, 0.8, 0.6);
 vec3 global_ambient = vec3(0.05, 0.05, 0.05);
-int  shininess = 8;
+int  shininess = 50;
 
 void main()
 {
@@ -39,18 +40,17 @@ void main()
 	vec3 specular = pow(max(dot(R, V), 0.0), shininess) * specular_albedo;
 
 	float attenuation;
-	if (attenuationmode
-	!= 1)
+	if (attenuationmode != 1)
 	{
 		attenuation = 1.0;
 	}
 	else
 	{
 		// Define attenuation constants. These could be uniforms for greater flexibility
-		float attenuation_k1 = 0.5;
-		float attenuation_k2 = 0.5;
-		float attenuation_k3 = 0.5;
-		attenuation = 1.0 / (attenuation_k1 + attenuation_k2*distanceToLight + attenuation_k3 * pow(distanceToLight, 2));
+		float attenuation_k1 = sunPower;
+		float attenuation_k2 = sunPower;
+		float attenuation_k3 = sunPower;
+		attenuation = 1.0 / (attenuation_k1 + attenuation_k2 * distanceToLight + attenuation_k3 * pow(distanceToLight, 2));
 	}
 
 

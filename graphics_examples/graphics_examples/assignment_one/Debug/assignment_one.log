@@ -1,4 +1,1 @@
-﻿  poslight.cpp
-C:\Users\mariu\DEV\Graphics Module\graphics_examples\graphics_examples\assignment_one\poslight.cpp(567,51): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\mariu\DEV\Graphics Module\graphics_examples\graphics_examples\assignment_one\poslight.cpp(567,38): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  assignment_one.vcxproj -> C:\Users\mariu\DEV\Graphics Module\graphics_examples\graphics_examples\Debug\assignment_one.exe
+﻿

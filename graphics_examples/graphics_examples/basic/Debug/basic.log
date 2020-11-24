@@ -1,4 +1,1 @@
-﻿  basic.cpp
-C:\Users\mariu\DEV\Graphics Module\graphics_examples\graphics_examples\basic\basic.cpp(130,12): warning C4305: '-=': truncation from 'double' to 'GLfloat'
-C:\Users\mariu\DEV\Graphics Module\graphics_examples\graphics_examples\basic\basic.cpp(132,12): warning C4305: '+=': truncation from 'double' to 'GLfloat'
-  basic.vcxproj -> C:\Users\mariu\DEV\Graphics Module\graphics_examples\graphics_examples\Debug\basic.exe
+﻿

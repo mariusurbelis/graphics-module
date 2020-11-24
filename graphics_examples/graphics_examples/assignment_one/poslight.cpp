@@ -563,8 +563,8 @@ static void keyCallback(GLFWwindow* window, int key, int s, int action, int mods
 /* Entry point of program */
 int main(int argc, char* argv[])
 {
-	GLWrapper* glw = new GLWrapper(1024, 768, "Assignment One - Marius Urbelis");
-	//GLWrapper* glw = new GLWrapper(1920 * 1.5f, 1080 * 1.5f, "Assignment One - Marius Urbelis");
+	//GLWrapper* glw = new GLWrapper(1024, 768, "Assignment One - Marius Urbelis");
+	GLWrapper* glw = new GLWrapper(1920 * 1.5f, 1080 * 1.5f, "Assignment One - Marius Urbelis");
 
 	if (!ogl_LoadFunctions())
 	{

@@ -41,7 +41,7 @@ void main()
 	if (colourmode == 1)
 		diffuse_albedo = colour;
 	else
-		diffuse_albedo = vec4(1.0, 0, 0, 1.0);
+		diffuse_albedo = vec4(0.4, 0.4, 0.4, 1.0);
 
 	vec3 ambient = diffuse_albedo.xyz * 0.2;
 

@@ -145,11 +145,15 @@
     <ClCompile Include="..\..\common\cylinder.cpp" />
     <ClCompile Include="..\..\common\sphere.cpp" />
     <ClCompile Include="..\..\common\wrapper_glfw.cpp" />
+    <ClCompile Include="claw.cpp" />
     <ClCompile Include="poslight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assignment.frag" />
     <None Include="assignment.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="claw.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

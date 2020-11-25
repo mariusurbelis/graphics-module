@@ -32,11 +32,14 @@ if you prefer */
 // Include headers for our objects
 #include "sphere.h"
 #include "cube.h"
+#include "claw.h"
+#include "cylinder.h"
 
 using namespace std;
 using namespace glm;
 
 void printInstructions();
+void setColor(float red, float green, float blue);
 
 /* Define buffer object indices */
 GLuint elementbuffer;
@@ -63,6 +66,7 @@ GLfloat sunPower;
 GLfloat panelOneRotation, panelTwoRotation;
 
 vec3 lightPosition;
+vec3 partColor;
 vec3 issPosition;
 
 vec3 armRootRotation;
@@ -72,7 +76,7 @@ vec3 armTipRotation;
 vec3 pivot;
 
 /* Uniforms*/
-GLuint modelID, viewID, projectionID, lightposID, normalmatrixID, sunPowerID;
+GLuint modelID, viewID, projectionID, lightposID, normalmatrixID, sunPowerID, partColorID;
 GLuint colourmodeID, emitmodeID, attenuationmodeID;
 
 GLfloat aspect_ratio;		/* Aspect ratio of the window defined in the reshape callback*/
@@ -81,6 +85,8 @@ GLuint numspherevertices;
 /* Global instances of our objects */
 Sphere aSphere;
 Cube aCube;
+Claw aClaw;
+Cylinder aCylinder;
 
 /*
 This function is called before entering the main rendering loop.
@@ -98,7 +104,7 @@ void init(GLWrapper* glw)
 	angle_inc_x = angle_inc_y = angle_inc_z = 0;
 	model_scale = 1.f;
 	aspect_ratio = 1.3333f;
-	colourmode = 0; emitmode = 0;
+	colourmode = 1; emitmode = 0;
 	attenuationmode = 0; // Attenuation is on by default
 	numlats = 60;		// Number of latitudes in our sphere
 	numlongs = 60;		// Number of longitudes in our sphere
@@ -110,6 +116,8 @@ void init(GLWrapper* glw)
 	armTipRotation = vec3(0);
 
 	lightPosition = vec3(1, 0, 2);
+	
+	partColor = vec3(0.5f, 0.5f, 0.5f);
 
 	sunPower = 0.05f;
 
@@ -141,10 +149,13 @@ void init(GLWrapper* glw)
 	lightposID = glGetUniformLocation(program, "lightpos");
 	normalmatrixID = glGetUniformLocation(program, "normalmatrix");
 	sunPowerID = glGetUniformLocation(program, "sunPower");
+	partColorID = glGetUniformLocation(program, "partColor");
 
 	/* create our sphere and cube objects */
 	aSphere.makeSphere(numlats, numlongs);
 	aCube.makeCube();
+	aClaw.makeClaw();
+	aCylinder.makeCylinder();
 
 	printInstructions();
 }
@@ -199,6 +210,7 @@ void display()
 	glUniformMatrix4fv(viewID, 1, GL_FALSE, &view[0][0]);
 	glUniformMatrix4fv(projectionID, 1, GL_FALSE, &projection[0][0]);
 	glUniform4fv(lightposID, 1, value_ptr(lightpos));
+	glUniform3fv(partColorID, 1, value_ptr(partColor));
 
 	/* Draw a small sphere in the lightsource position to visually represent the light source */
 	model.push(model.top());
@@ -230,28 +242,99 @@ void display()
 		// Hull
 		model.push(model.top());
 		{
-			// Define the model transformations for the cube
+			setColor(0.5f, 0.5f, 0.5f);
+
 			model.top() = translate(model.top(), vec3(issPosition.x, issPosition.y, issPosition.z));
-			model.top() = scale(model.top(), vec3(1.0f, 1.1f, 3.0f)); // make a small sphere
-
-			// Send the model uniform and normal matrix to the currently bound shader,
+			model.top() = rotate(model.top(), -radians(90.0f), glm::vec3(1, 0, 0));
+			model.top() = scale(model.top(), vec3(0.3f, 1.5f, 0.3f)); // make a small sphere
 			glUniformMatrix4fv(modelID, 1, GL_FALSE, &(model.top()[0][0]));
-
-			// Recalculate the normal matrix and send to the vertex shader
 			normalmatrix = transpose(inverse(mat3(view * model.top())));
 			glUniformMatrix3fv(normalmatrixID, 1, GL_FALSE, &normalmatrix[0][0]);
+			aCylinder.drawCylinder(drawmode);
+		}
+		model.pop();
 
-			aCube.drawCube(drawmode);
+		model.push(model.top());
+		{
+			model.top() = translate(model.top(), vec3(issPosition.x, issPosition.y, issPosition.z + 1.0f));
+			model.top() = rotate(model.top(), -radians(90.0f), glm::vec3(1, 0, 0));
+			model.top() = scale(model.top(), vec3(0.15f, 1.5f, 0.15f)); // make a small sphere
+			glUniformMatrix4fv(modelID, 1, GL_FALSE, &(model.top()[0][0]));
+			normalmatrix = transpose(inverse(mat3(view * model.top())));
+			glUniformMatrix3fv(normalmatrixID, 1, GL_FALSE, &normalmatrix[0][0]);
+			aCylinder.drawCylinder(drawmode);
+		}
+		model.pop();
+
+		model.push(model.top());
+		{
+			model.top() = translate(model.top(), vec3(issPosition.x, issPosition.y, issPosition.z + 1.6f));
+			model.top() = rotate(model.top(), -radians(90.0f), glm::vec3(1, 0, 0));
+			model.top() = scale(model.top(), vec3(0.3f, 1.5f, 0.3f)); // make a small sphere
+			glUniformMatrix4fv(modelID, 1, GL_FALSE, &(model.top()[0][0]));
+			normalmatrix = transpose(inverse(mat3(view * model.top())));
+			glUniformMatrix3fv(normalmatrixID, 1, GL_FALSE, &normalmatrix[0][0]);
+			aCylinder.drawCylinder(drawmode);
+		}
+		model.pop();
+
+		model.push(model.top());
+		{
+
+			model.top() = translate(model.top(), vec3(issPosition.x, issPosition.y + 0.9f, issPosition.z + 1.6f));
+			model.top() = rotate(model.top(), -radians(90.0f), glm::vec3(0, 1, 0));
+			model.top() = scale(model.top(), vec3(0.3f, 1.0f, 0.3f)); // make a small sphere
+			glUniformMatrix4fv(modelID, 1, GL_FALSE, &(model.top()[0][0]));
+			normalmatrix = transpose(inverse(mat3(view * model.top())));
+			glUniformMatrix3fv(normalmatrixID, 1, GL_FALSE, &normalmatrix[0][0]);
+			aCylinder.drawCylinder(drawmode);
+		}
+		model.pop();
+
+		model.push(model.top());
+		{
+			model.top() = translate(model.top(), vec3(issPosition.x, issPosition.y + 0.5f, issPosition.z + 1.6f));
+			model.top() = rotate(model.top(), -radians(90.0f), glm::vec3(0, 1, 0));
+			model.top() = scale(model.top(), vec3(0.15f, 1.0f, 0.15f)); // make a small sphere
+			glUniformMatrix4fv(modelID, 1, GL_FALSE, &(model.top()[0][0]));
+			normalmatrix = transpose(inverse(mat3(view * model.top())));
+			glUniformMatrix3fv(normalmatrixID, 1, GL_FALSE, &normalmatrix[0][0]);
+			aCylinder.drawCylinder(drawmode);
+		}
+		model.pop();
+
+		model.push(model.top());
+		{
+			model.top() = translate(model.top(), vec3(issPosition.x, issPosition.y - 0.9f, issPosition.z + 1.6f));
+			model.top() = rotate(model.top(), -radians(90.0f), glm::vec3(0, 1, 0));
+			model.top() = scale(model.top(), vec3(0.3f, 1.0f, 0.3f)); // make a small sphere
+			glUniformMatrix4fv(modelID, 1, GL_FALSE, &(model.top()[0][0]));
+			normalmatrix = transpose(inverse(mat3(view * model.top())));
+			glUniformMatrix3fv(normalmatrixID, 1, GL_FALSE, &normalmatrix[0][0]);
+			aCylinder.drawCylinder(drawmode);
+		}
+		model.pop();
+
+		model.push(model.top());
+		{
+			model.top() = translate(model.top(), vec3(issPosition.x, issPosition.y - 0.5f, issPosition.z + 1.6f));
+			model.top() = rotate(model.top(), -radians(90.0f), glm::vec3(0, 1, 0));
+			model.top() = scale(model.top(), vec3(0.15f, 1.0f, 0.15f)); // make a small sphere
+			glUniformMatrix4fv(modelID, 1, GL_FALSE, &(model.top()[0][0]));
+			normalmatrix = transpose(inverse(mat3(view * model.top())));
+			glUniformMatrix3fv(normalmatrixID, 1, GL_FALSE, &normalmatrix[0][0]);
+			aCylinder.drawCylinder(drawmode);
 		}
 		model.pop();
 
 		// Solar Array Rod Left
 		model.push(model.top());
 		{
+			setColor(0.5f, 0.5f, 0.5f);
 			// Define the model transformations for the cube
-			model.top() = translate(model.top(), vec3(issPosition.x + 0.7f, issPosition.y, issPosition.z));
+			model.top() = translate(model.top(), vec3(issPosition.x + 0.7f, issPosition.y, issPosition.z + 0.4f));
 			model.top() = rotate(model.top(), -radians(panelOneRotation), glm::vec3(1, 0, 0));
-			model.top() = scale(model.top(), vec3(2.5f, 0.05f, 0.05f)); // make a small sphere
+			model.top() = scale(model.top(), vec3(2.5f, 0.06f, 0.05f)); // make a small sphere
 
 			glUniformMatrix4fv(modelID, 1, GL_FALSE, &(model.top()[0][0]));
 			normalmatrix = transpose(inverse(mat3(view * model.top())));
@@ -263,8 +346,43 @@ void display()
 		// Solar Array Left
 		model.push(model.top());
 		{
+			setColor(0.2f, 0.2f, 0.2f);
+
 			// Define the model transformations for the cube
-			model.top() = translate(model.top(), vec3(issPosition.x + 0.8f, issPosition.y, issPosition.z));
+			model.top() = translate(model.top(), vec3(issPosition.x + 0.8f, issPosition.y, issPosition.z + 0.4f));
+			model.top() = rotate(model.top(), -radians(panelOneRotation), glm::vec3(1, 0, 0));
+			model.top() = scale(model.top(), vec3(1.8f, 0.05f, 0.5f)); // make a small sphere
+
+			glUniformMatrix4fv(modelID, 1, GL_FALSE, &(model.top()[0][0]));
+			normalmatrix = transpose(inverse(mat3(view * model.top())));
+			glUniformMatrix3fv(normalmatrixID, 1, GL_FALSE, &normalmatrix[0][0]);
+			aCube.drawCube(drawmode);
+		}
+		model.pop();
+
+		// Solar Array Rod Left
+		model.push(model.top());
+		{
+			setColor(0.5f, 0.5f, 0.5f);
+			// Define the model transformations for the cube
+			model.top() = translate(model.top(), vec3(issPosition.x + 0.7f, issPosition.y, issPosition.z - 0.4f));
+			model.top() = rotate(model.top(), -radians(panelOneRotation), glm::vec3(1, 0, 0));
+			model.top() = scale(model.top(), vec3(2.5f, 0.06f, 0.05f)); // make a small sphere
+
+			glUniformMatrix4fv(modelID, 1, GL_FALSE, &(model.top()[0][0]));
+			normalmatrix = transpose(inverse(mat3(view * model.top())));
+			glUniformMatrix3fv(normalmatrixID, 1, GL_FALSE, &normalmatrix[0][0]);
+			aCube.drawCube(drawmode);
+		}
+		model.pop();
+
+		// Solar Array Left
+		model.push(model.top());
+		{
+			setColor(0.2f, 0.2f, 0.2f);
+
+			// Define the model transformations for the cube
+			model.top() = translate(model.top(), vec3(issPosition.x + 0.8f, issPosition.y, issPosition.z - 0.4f));
 			model.top() = rotate(model.top(), -radians(panelOneRotation), glm::vec3(1, 0, 0));
 			model.top() = scale(model.top(), vec3(1.8f, 0.05f, 0.5f)); // make a small sphere
 
@@ -278,10 +396,11 @@ void display()
 		// Solar Array Rod Right
 		model.push(model.top());
 		{
+			setColor(0.5f, 0.5f, 0.5f);
 			// Define the model transformations for the cube
-			model.top() = translate(model.top(), vec3(issPosition.x - 0.7f, issPosition.y, issPosition.z));
+			model.top() = translate(model.top(), vec3(issPosition.x - 0.7f, issPosition.y, issPosition.z - 0.4f));
 			model.top() = rotate(model.top(), -radians(panelTwoRotation), glm::vec3(1, 0, 0));
-			model.top() = scale(model.top(), vec3(2.5f, 0.05f, 0.05f));
+			model.top() = scale(model.top(), vec3(2.5f, 0.06f, 0.05f));
 
 			glUniformMatrix4fv(modelID, 1, GL_FALSE, &(model.top()[0][0]));
 			normalmatrix = transpose(inverse(mat3(view * model.top())));
@@ -293,8 +412,9 @@ void display()
 		// Solar Array Right
 		model.push(model.top());
 		{
+			setColor(0.2f, 0.2f, 0.2f);
 			// Define the model transformations for the cube
-			model.top() = translate(model.top(), vec3(issPosition.x - 0.8f, issPosition.y, issPosition.z));
+			model.top() = translate(model.top(), vec3(issPosition.x - 0.8f, issPosition.y, issPosition.z - 0.4f));
 			model.top() = rotate(model.top(), -radians(panelTwoRotation), glm::vec3(1, 0, 0));
 			model.top() = scale(model.top(), vec3(1.8f, 0.05f, 0.5f)); // make a small sphere
 
@@ -305,19 +425,46 @@ void display()
 		}
 		model.pop();
 
+		// Solar Array Rod Right
+		model.push(model.top());
+		{
+			setColor(0.5f, 0.5f, 0.5f);
+			// Define the model transformations for the cube
+			model.top() = translate(model.top(), vec3(issPosition.x - 0.7f, issPosition.y, issPosition.z + 0.4f));
+			model.top() = rotate(model.top(), -radians(panelTwoRotation), glm::vec3(1, 0, 0));
+			model.top() = scale(model.top(), vec3(2.5f, 0.06f, 0.05f));
+
+			glUniformMatrix4fv(modelID, 1, GL_FALSE, &(model.top()[0][0]));
+			normalmatrix = transpose(inverse(mat3(view * model.top())));
+			glUniformMatrix3fv(normalmatrixID, 1, GL_FALSE, &normalmatrix[0][0]);
+			aCube.drawCube(drawmode);
+		}
+		model.pop();
+
+		// Solar Array Right
+		model.push(model.top());
+		{
+			setColor(0.2f, 0.2f, 0.2f);
+			// Define the model transformations for the cube
+			model.top() = translate(model.top(), vec3(issPosition.x - 0.8f, issPosition.y, issPosition.z + 0.4f));
+			model.top() = rotate(model.top(), -radians(panelTwoRotation), glm::vec3(1, 0, 0));
+			model.top() = scale(model.top(), vec3(1.8f, 0.05f, 0.5f)); // make a small sphere
+
+			glUniformMatrix4fv(modelID, 1, GL_FALSE, &(model.top()[0][0]));
+			normalmatrix = transpose(inverse(mat3(view * model.top())));
+			glUniformMatrix3fv(normalmatrixID, 1, GL_FALSE, &normalmatrix[0][0]);
+			aCube.drawCube(drawmode);
+		}
+		model.pop();
 
 		mat4 previous;
 
 		// Arm Root
 		model.push(model.top());
 		{
-			// Define the model transformations for the cube
+			setColor(0.2f, 0.2f, 0.5f);
 
 			model.top() = translate(model.top(), vec3(issPosition.x, issPosition.y, issPosition.z - 1.f));
-
-			//model.top() = rotate(model.top(), -radians(45.f), glm::vec3(0, 1, 0)); //rotating in clockwise direction around x-axis
-
-
 			pivot = vec3(0, 0, 0.25f);
 
 			model.top() = translate(model.top(), pivot);
@@ -326,14 +473,9 @@ void display()
 			model.top() = rotate(model.top(), -radians(armRootRotation.z), glm::vec3(0, 0, 1)); //rotating in clockwise direction around z-axis
 			model.top() = translate(model.top(), -pivot);
 
-			// local rotation relative to parent was something like parent rotation times inverse of local rotation 
-
 			model.top() = scale(model.top(), vec3(0.2f, 0.2f, 1.f));
 
-			// Send the model uniform and normal matrix to the currently bound shader,
 			glUniformMatrix4fv(modelID, 1, GL_FALSE, &(model.top()[0][0]));
-
-			// Recalculate the normal matrix and send to the vertex shader
 			normalmatrix = transpose(inverse(mat3(view * model.top())));
 			glUniformMatrix3fv(normalmatrixID, 1, GL_FALSE, &normalmatrix[0][0]);
 
@@ -346,6 +488,7 @@ void display()
 		// Arm Joint
 		model.push(model.top());
 		{
+			setColor(0.1f, 0.1f, 0.6f);
 			// Define the model transformations for the cube
 
 			model.top() = translate(model.top(), vec3(issPosition.x, issPosition.y, issPosition.z - 1.5f));
@@ -389,6 +532,7 @@ void display()
 		// Arm Tip
 		model.push(model.top());
 		{
+			setColor(0.9f, 0.9f, 0.9f);
 			// Define the model transformations for the cube
 
 			model.top() = translate(model.top(), vec3(issPosition.x, issPosition.y, issPosition.z - 2.0f));
@@ -434,6 +578,50 @@ void display()
 			previous = model.top();
 
 			aCube.drawCube(drawmode);
+		}
+		model.pop();
+
+		// Arm Tip
+		model.push(model.top());
+		{
+			setColor(0.9f, 0.9f, 0.9f);
+			// Define the model transformations for the cube
+
+			model.top() = translate(model.top(), vec3(issPosition.x, issPosition.y, issPosition.z - 2.25f));
+
+			//model.top() = rotate(model.top(), -radians(45.f), glm::vec3(0, 1, 0)); //rotating in clockwise direction around x-axis
+
+
+			pivot = vec3(0, 0, 1.5f);
+
+			model.top() = translate(model.top(), pivot);
+			model.top() = rotate(model.top(), -radians(armRootRotation.x), glm::vec3(1, 0, 0)); //rotating in clockwise direction around x-axis
+			model.top() = rotate(model.top(), -radians(armRootRotation.y), glm::vec3(0, 1, 0)); //rotating in clockwise direction around y-axis
+			model.top() = rotate(model.top(), -radians(armRootRotation.z), glm::vec3(0, 0, 1)); //rotating in clockwise direction around z-axis
+			model.top() = translate(model.top(), -pivot);
+
+			pivot = vec3(0, 0, 1.0f);
+
+			model.top() = translate(model.top(), pivot);
+			model.top() = rotate(model.top(), -radians(armJointRotation.x), glm::vec3(1, 0, 0)); //rotating in clockwise direction around x-axis
+			model.top() = rotate(model.top(), -radians(armJointRotation.y), glm::vec3(0, 1, 0)); //rotating in clockwise direction around y-axis
+			model.top() = rotate(model.top(), -radians(armJointRotation.z), glm::vec3(0, 0, 1)); //rotating in clockwise direction around z-axis
+			model.top() = translate(model.top(), -pivot);
+
+			pivot = vec3(0, 0, 0.5f);
+
+			model.top() = translate(model.top(), pivot);
+			model.top() = rotate(model.top(), -radians(armTipRotation.x), glm::vec3(1, 0, 0)); //rotating in clockwise direction around x-axis
+			model.top() = rotate(model.top(), -radians(armTipRotation.y), glm::vec3(0, 1, 0)); //rotating in clockwise direction around y-axis
+			model.top() = rotate(model.top(), -radians(armTipRotation.z), glm::vec3(0, 0, 1)); //rotating in clockwise direction around z-axis
+			model.top() = translate(model.top(), -pivot);
+
+			model.top() = scale(model.top(), vec3(0.2f, 0.2f, 0.2f));
+			glUniformMatrix4fv(modelID, 1, GL_FALSE, &(model.top()[0][0]));
+			normalmatrix = transpose(inverse(mat3(view * model.top())));
+			glUniformMatrix3fv(normalmatrixID, 1, GL_FALSE, &normalmatrix[0][0]);
+			previous = model.top();
+			aClaw.drawClaw(drawmode);
 		}
 		model.pop();
 	}
@@ -563,8 +751,8 @@ static void keyCallback(GLFWwindow* window, int key, int s, int action, int mods
 /* Entry point of program */
 int main(int argc, char* argv[])
 {
-	//GLWrapper* glw = new GLWrapper(1024, 768, "Assignment One - Marius Urbelis");
-	GLWrapper* glw = new GLWrapper(1920 * 1.5f, 1080 * 1.5f, "Assignment One - Marius Urbelis");
+	GLWrapper* glw = new GLWrapper(1024, 768, "Assignment One - Marius Urbelis");
+	//GLWrapper* glw = new GLWrapper(1920 * 1.5f, 1080 * 1.5f, "Assignment One - Marius Urbelis");
 
 	if (!ogl_LoadFunctions())
 	{
@@ -603,4 +791,10 @@ void printInstructions()
 
 	cout << " Camera controls:" << endl << endl;
 	cout << " 7 8 9 0 - =" << endl << endl << endl;
+}
+
+void setColor(float red, float green, float blue)
+{
+	partColor = vec3(red, green, blue);
+	glUniform3fv(partColorID, 1, value_ptr(partColor));
 }

@@ -22,6 +22,7 @@ uniform mat4 model, view, projection;
 uniform mat3 normalmatrix;
 uniform uint colourmode, emitmode;
 uniform vec4 lightpos;
+uniform vec3 partColor;
 
 uniform uint attenuationmode;
 
@@ -39,7 +40,8 @@ void main()
 
 	// Switch the vertex colour based on the colourmode
 	if (colourmode == 1)
-		diffuse_albedo = colour;
+		//diffuse_albedo = colour;
+		diffuse_albedo = vec4(partColor, 1.0f);
 	else
 		diffuse_albedo = vec4(0.4, 0.4, 0.4, 1.0);
 

@@ -1,0 +1,4 @@
+﻿  object_loader_texture.cpp
+C:\Users\mariu\DEV\Graphics Module\graphics_examples\graphics_examples\assignment_two\object_loader_texture.cpp(271,51): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\mariu\DEV\Graphics Module\graphics_examples\graphics_examples\assignment_two\object_loader_texture.cpp(271,38): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  assignment_two.vcxproj -> C:\Users\mariu\DEV\Graphics Module\graphics_examples\graphics_examples\Debug\assignment_two.exe

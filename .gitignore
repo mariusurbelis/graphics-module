@@ -1,5 +1,3 @@
 *.zip
 graphics_examples/graphics_examples/.vs/
-graphics_examples/graphics_examples/Debug/
-graphics_examples/graphics_examples/assignment_one/Debug/
-graphics_examples/graphics_examples/assignment_two/Debug/
+Debug/

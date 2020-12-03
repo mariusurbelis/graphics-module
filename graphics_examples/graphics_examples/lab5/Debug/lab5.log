@@ -1,4 +1,0 @@
-﻿MSVCRTD.lib(initializers.obj) : warning LNK4098: defaultlib 'msvcrt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
-glloadD.lib(gl_load.obj) : warning LNK4099: PDB 'glloadD.pdb' was not found with 'glloadD.lib(gl_load.obj)' or at 'C:\Users\mariu\DEV\Graphics Module\graphics_examples\graphics_examples\Debug\glloadD.pdb'; linking object as if no debug info
-glloadD.lib(gl_load_cpp.obj) : warning LNK4099: PDB 'glloadD.pdb' was not found with 'glloadD.lib(gl_load_cpp.obj)' or at 'C:\Users\mariu\DEV\Graphics Module\graphics_examples\graphics_examples\Debug\glloadD.pdb'; linking object as if no debug info
-  lab5.vcxproj -> C:\Users\mariu\DEV\Graphics Module\graphics_examples\graphics_examples\Debug\lab5.exe

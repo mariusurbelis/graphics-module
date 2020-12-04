@@ -87,7 +87,7 @@ void init(GLWrapper *glw)
 	glBindVertexArray(vao);
 
 	/* Load and create our object*/
-	tiny_obj.load_obj("Models/tinyworld.obj");
+	tiny_obj.load_obj("Models/Buddha/buddha.obj");
 
 
 	// Creater the sphere (params are num_lats and num_longs)
@@ -114,7 +114,7 @@ void init(GLWrapper *glw)
 	// Be careful with the GL_RGB parameter as this may need to be changed if your image is not 24-bit
 	// If unsure then look at the nrChannels returned 
 	//unsigned char* data = stbi_load("..//..//images//grass.jpg", &width, &height, &nrChannels, 0);
-	unsigned char* data = stbi_load("Models/rock.jpg", &width, &height, &nrChannels, 0);
+	unsigned char* data = stbi_load("Models/Buddha/buddha.jpg", &width, &height, &nrChannels, 0);
 
 	// check for an error during the load process
 	if (data)
@@ -267,8 +267,8 @@ static void keyCallback(GLFWwindow* window, int key, int s, int action, int mods
 /* Entry point of program */
 int main(int argc, char* argv[])
 {
-	//GLWrapper* glw = new GLWrapper(1024, 768, "Lab5: Fun with texture");;
-	GLWrapper *glw = new GLWrapper(1920 * 1.5f, 1080 * 1.5f, "Lab5: Fun with texture");;
+	GLWrapper* glw = new GLWrapper(1024, 768, "Lab5: Fun with texture");;
+	//GLWrapper *glw = new GLWrapper(1920 * 1.5f, 1080 * 1.5f, "Lab5: Fun with texture");;
 
 	if (!ogl_LoadFunctions())
 	{

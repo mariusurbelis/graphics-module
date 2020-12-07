@@ -114,7 +114,7 @@ void init(GLWrapper *glw)
 	// Be careful with the GL_RGB parameter as this may need to be changed if your image is not 24-bit
 	// If unsure then look at the nrChannels returned 
 	//unsigned char* data = stbi_load("..//..//images//grass.jpg", &width, &height, &nrChannels, 0);
-	unsigned char* data = stbi_load("Models/Buddha/buddha.jpg", &width, &height, &nrChannels, 0);
+	unsigned char* data = stbi_load("Models/Buddha/buddha.png", &width, &height, &nrChannels, 0);
 
 	// check for an error during the load process
 	if (data)

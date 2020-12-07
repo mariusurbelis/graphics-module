@@ -16,6 +16,10 @@ uniform uint colourmode;
 // Output the vertex colour - to be rasterized into pixel fragments
 out vec4 fcolour;
 vec3 light_dir = vec3(0.0, 0.0, 10.0);
+out vec4 vertexPosition;
+out vec4 color;
+out vec3 lightDirection;
+out vec3 vertexNormal;
 
 // Output a texture coordinate as a vertex attribute
 out vec2 ftexcoord;
@@ -43,6 +47,17 @@ void main()
 
 	// Define the vertex colour
 	fcolour = vec4(diffuse, 1.0) + ambient + specular;
+
+	vertexPosition = P;
+
+	vertexNormal = N;
+
+	vec4 diffuse_albedo;
+	diffuse_albedo = vec4(0.4, 0.4, 0.4, 1.0);
+
+	color = diffuse_albedo;
+
+	lightDirection = light_dir;
 
 	// Define the vertex position
 	gl_Position = projection * view * model * position_h;

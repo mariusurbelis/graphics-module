@@ -53,46 +53,6 @@ void main()
 	vec3 N = normalize(normalmatrix * normal);		// Modify the normals by the normal-matrix (i.e. to model-view (or eye) coordinates )
 	vec3 L = light_pos3 - P.xyz;		// Calculate the vector from the light position to the vertex in eye space
 	float distanceToLight = length(L);	// For attenuation
-	//L = normalize(L);					// Normalise our light vector
-	
-	// Calculate the diffuse component
-	//vec3 diffuse = max(dot(N, L), 0.0) * diffuse_albedo.xyz;
-
-	// Calculate the specular component using Phong specular reflection
-	/*
-	vec3 V = normalize(-P.xyz);	
-	vec3 R = reflect(-L, N);
-	vec3 specular = pow(max(dot(R, V), 0.0), shininess) * specular_albedo;
-	*/
-
-	// Calculate the attenuation factor;
-	/*
-	float attenuation;
-	if (attenuationmode != 1)
-	{
-		attenuation = 1.0;
-	}
-	else
-	{
-		// Define attenuation constants. These could be uniforms for greater flexibility
-		float attenuation_k1 = 0.5;
-		float attenuation_k2 = 0.5;
-		float attenuation_k3 = 0.5;
-		attenuation = 1.0 / (attenuation_k1 + attenuation_k2*distanceToLight + 
-								   attenuation_k3 * pow(distanceToLight, 2));
-	}
-	*/
-
-	// If emitmode is 1 then we enable emmissive lighting
-	// if (emitmode == 1) emissive = vec3(1.0, 1.0, 0.8); 
-
-	// Calculate the output colour, includung attenuation on the diffuse and specular components
-	// Note that you may want to exclude the ambient form the attenuation factor so objects
-	// are always visible, or include a global ambient
-	//fcolour = vec4(attenuation*(ambient + diffuse + specular) + emissive + global_ambient, 1.0);
-	
-	//fcolour = vec4(ambient + diffuse + global_ambient, 1.0);
-	//fcolour = color;
 
 	vertexPosition = P;
 

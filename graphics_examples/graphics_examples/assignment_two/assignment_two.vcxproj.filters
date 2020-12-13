@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="object_loader_texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="tiny_loader_texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -30,13 +27,21 @@
     <ClCompile Include="..\..\common\wrapper_glfw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="assignment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="object_loader_texture.frag">
+    <None Include="assignment.frag">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="object_loader_texture.vert">
+    <None Include="assignment.vert">
       <Filter>Source Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="assignment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

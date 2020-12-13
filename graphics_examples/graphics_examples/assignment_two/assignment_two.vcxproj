@@ -22,12 +22,15 @@
     <ClCompile Include="..\..\common\cube_tex.cpp" />
     <ClCompile Include="..\..\common\sphere_tex.cpp" />
     <ClCompile Include="..\..\common\wrapper_glfw.cpp" />
-    <ClCompile Include="object_loader_texture.cpp" />
+    <ClCompile Include="assignment.cpp" />
     <ClCompile Include="tiny_loader_texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="object_loader_texture.frag" />
-    <None Include="object_loader_texture.vert" />
+    <None Include="assignment.frag" />
+    <None Include="assignment.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="assignment.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

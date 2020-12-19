@@ -1,4 +1,4 @@
-/**
+﻿/**
   wrapper_glfw.cpp
   Modified from the OpenGL GLFW example to provide a wrapper GLFW class
   and to include shader loader functions to include shaders as text files
@@ -99,6 +99,8 @@ and then starts the event loop which runs until the program ends
 */
 int GLWrapper::eventLoop()
 {
+	glfwSwapInterval(1);
+
 	// Main loop
 	while (!glfwWindowShouldClose(window))
 	{

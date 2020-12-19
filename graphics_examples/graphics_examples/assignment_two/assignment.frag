@@ -43,8 +43,5 @@ void main()
 
 	vec3 ambient = texcolour.xyz * 0.3;
 	
-	if (specularmode == 1)
-		outputColor = vec4(attenuation * (diffuse + ambient + specular) + emissive, 1.0f);
-	else
-		outputColor = vec4(attenuation * (diffuse + ambient) + emissive, 1.0f);
+	outputColor = vec4(attenuation * ((specularmode == 1) ? (diffuse + specular) : diffuse) + ambient + emissive, 1.0f);
 }

@@ -28,6 +28,8 @@
   <ItemGroup>
     <None Include="assignment.frag" />
     <None Include="assignment.vert" />
+    <None Include="shadow.frag" />
+    <None Include="shadow.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="assignment.h" />

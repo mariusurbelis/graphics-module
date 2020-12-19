@@ -13,6 +13,9 @@
 #include "stb_image.h"
 #include <stack>
 #include "assignment.h"
+#include <cube_tex.h>
+
+#include <chrono>
 
 #define GROUND_OFFSET 3.33
 #define ROCK_WALL_OFFSET_X 5.85
@@ -26,7 +29,7 @@ void DrawModel(TinyObjLoader object, GLuint textureID, vec3 position, vec3 rotat
 void SetShiny(bool active);
 void SetEmissive(bool active);
 
-GLuint program;
+GLuint program, shadow;
 GLuint vao;
 GLuint colourmode;
 
@@ -41,6 +44,7 @@ vec3 buddhaPosition = vec3(0, 0, 0);
 GLfloat sunPower = 0.05f;
 
 GLuint modelID, viewID, projectionID, lightposID, sunPowerID;
+GLuint modelShadowID, viewShadowID, projectionShadowID;
 GLuint colourmodeID, emitmodeID, specularmodeID;
 
 GLfloat aspect_ratio;
@@ -48,10 +52,14 @@ GLfloat aspect_ratio;
 TinyObjLoader buddhaObject, squirrelObject, blockObject, rockWall, katana, bookshelf;
 
 Sphere aSphere(false);
+Cube aCube;
 
 GLuint texID, groundTextureID, squirrelTextureID, rockTextureID, bookshelfTextureID;
 
 stack<mat4> model;
+
+double offset = 0;
+int buddhaPosAngle = 0;
 
 void init(GLWrapper* glw)
 {
@@ -85,6 +93,7 @@ void init(GLWrapper* glw)
 	try
 	{
 		program = glw->LoadShader("assignment.vert", "assignment.frag");
+		shadow = glw->LoadShader("shadow.vert", "shadow.frag");
 	}
 	catch (exception& e)
 	{
@@ -99,6 +108,7 @@ void init(GLWrapper* glw)
 	LoadTexture("Rock Wall/Maps/2.jpg", rockTextureID, true);
 	LoadTexture("Books/uv.png", bookshelfTextureID, true);
 
+	aCube.makeCube();
 
 	/* Define uniforms to send to vertex shader */
 	modelID = glGetUniformLocation(program, "model");
@@ -108,6 +118,10 @@ void init(GLWrapper* glw)
 	viewID = glGetUniformLocation(program, "view");
 	projectionID = glGetUniformLocation(program, "projection");
 
+	modelShadowID = glGetUniformLocation(shadow, "model");
+	viewShadowID = glGetUniformLocation(shadow, "view");
+	projectionShadowID = glGetUniformLocation(shadow, "projection");
+
 	sunPowerID = glGetUniformLocation(program, "sunPower");
 	lightposID = glGetUniformLocation(program, "lightpos");
 
@@ -116,6 +130,33 @@ void init(GLWrapper* glw)
 
 // Image parameters
 int width, height, nrChannels;
+
+// Calculate shadow projection matrix from Light pos (or direction)
+// and the plane equatino coefficients.
+// This matrix works both for direction and positional lights.
+mat4 shadow_matrix(vec4 L, vec4 P)
+{
+	//dot product of normal and light position/direction
+	GLfloat rdotl = P.x * L.x + P.y * L.y + P.z * L.z + P.w * L.w;
+
+	// Define the shadow projection matix
+	return mat4(-P.x * L.x + rdotl,
+		-P.x * L.y,
+		-P.x * L.z,
+		-P.x * L.w,
+		-P.y * L.x,
+		-P.y * L.y + rdotl,
+		-P.y * L.z,
+		-P.y * L.w,
+		-P.z * L.x,
+		-P.z * L.y,
+		-P.z * L.z + rdotl,
+		-P.z * L.w,
+		-P.w * L.x,
+		-P.w * L.y,
+		-P.w * L.z,
+		-P.w * L.w + rdotl);
+}
 
 /**
  * Function to use stb_image to load a texture, generate a texture ID and defined
@@ -178,6 +219,46 @@ void SetEmissive(bool active)
 	glUniform1ui(emitmodeID, active ? 1 : 0);
 }
 
+mat3 normalmatrix;
+
+void DrawWithShadow(mat4 view, TinyObjLoader object, GLuint textureID, vec3 objectPosition, float scaler)
+{
+	// Draw the object (monkey), with a projected shadow, spinning around it's y-axis
+	model.push(model.top());
+	{
+		// Draw the shadow
+		model.push(model.top());
+		{
+			// Switch to our shadow renderer shader
+			glUseProgram(shadow);
+
+			model.top() = translate(model.top(), vec3(0, -0.19f, 0));
+
+			// Calculate the shadow matrix from light position and plane normal
+			mat4 shadow = shadow_matrix(lightPosition - vec4(objectPosition, 1.0), vec4(0, 1.0, 0, 0.0));
+			//model.top() = scale(model.top(), vec3(scaler, scaler, scaler));
+			model.top() = model.top() * shadow;
+
+
+			model.top() = translate(model.top(), vec3(objectPosition.x, objectPosition.y + 0.19f, objectPosition.z));
+
+			// Send our current model, view and projection ONLY to our shadow matrix
+			glUniformMatrix4fv(modelShadowID, 1, GL_FALSE, &(model.top()[0][0]));
+			glUniformMatrix4fv(viewShadowID, 1, GL_FALSE, &view[0][0]);
+
+			/* Draw our shadow object */
+			object.drawObject(drawmode);
+
+			/* Make the compiled shader program current again */
+			glUseProgram(program);
+		}
+		model.pop();
+
+		DrawModel(object, textureID, objectPosition, vec3(0, 0, 0), scaler, true, false);
+	}
+	model.pop();
+}
+
 void DrawModel(TinyObjLoader object, GLuint textureID, vec3 position, vec3 rotation, float size, bool shiny, bool emissive)
 {
 	model.push(model.top());
@@ -189,6 +270,7 @@ void DrawModel(TinyObjLoader object, GLuint textureID, vec3 position, vec3 rotat
 		model.top() = rotate(model.top(), -radians(rotation.z), vec3(0, 0, 1));
 
 		glUniformMatrix4fv(modelID, 1, GL_FALSE, &(model.top()[0][0]));
+		//glUniformMatrix4fv(modelShadowID, 1, GL_FALSE, &(model.top()[0][0]));
 
 		glBindTexture(GL_TEXTURE_2D, textureID);
 
@@ -204,10 +286,6 @@ void DrawModel(TinyObjLoader object, GLuint textureID, vec3 position, vec3 rotat
 	}
 	model.pop();
 }
-
-double offset = 0;
-
-int buddhaPosAngle = 0;
 
 /* Called to update the display. Note that this function is called in the event loop in the wrapper
    class because we registered display as a callback function */
@@ -249,9 +327,17 @@ void display()
 	vec4 light = view * lightPosition;
 	glUniform4fv(lightposID, 1, value_ptr(light));
 
-	DrawModel(buddhaObject, rockTextureID, buddhaPosition, vec3(0, 0, 0), 3, true, false);
-	DrawModel(katana, rockTextureID, vec3(1, 0, -6.2), vec3(0, 0, 0), 2, true, false);
-	DrawModel(bookshelf, bookshelfTextureID, vec3(-2, 0, -6.2), vec3(0, 0, 0), 3, true, false);
+	glUseProgram(shadow);
+
+	glUniformMatrix4fv(viewShadowID, 1, GL_FALSE, &view[0][0]);
+	glUniformMatrix4fv(projectionShadowID, 1, GL_FALSE, &projection[0][0]);
+
+	glUseProgram(program);
+
+	DrawWithShadow(view, buddhaObject, rockTextureID, buddhaPosition, 2);
+	DrawWithShadow(view, bookshelf, bookshelfTextureID, vec3(-3, -0.08, -6.2), 3);
+	DrawWithShadow(view, bookshelf, bookshelfTextureID, vec3(3, -0.08, -6.2), 3);
+	DrawWithShadow(view, katana, rockTextureID, vec3(0, -0.05, -6.2), 3);
 
 	//DrawModel(squirrelObject, squirrelTextureID, vec3(x - 0.5f, y, z), vec3(angle_x, angle_y, angle_z), 1, false, false);
 
@@ -261,7 +347,7 @@ void display()
 
 	for (int x = -3; x <= 3; x++)
 		for (int y = -1; y < 5; y++)
-			DrawModel(rockWall, rockTextureID, vec3(ROCK_WALL_OFFSET_X * x, ROCK_WALL_OFFSET_Y * y, -10), vec3(0, 180, 0), 1, false, false);
+			DrawModel(rockWall, rockTextureID, vec3(ROCK_WALL_OFFSET_X * x, ROCK_WALL_OFFSET_Y * y, -20), vec3(0, 180, 0), 1, false, false);
 
 	for (int z = -3; z <= 3; z++)
 		for (int y = -1; y < 5; y++)
@@ -321,10 +407,10 @@ static void keyCallback(GLFWwindow* window, int key, int s, int action, int mods
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GL_TRUE);
 
-	if (key == 'W') cameraPosition.z -= 0.05f;
-	if (key == 'S') cameraPosition.z += 0.05f;
-	if (key == 'A') cameraPosition.x -= 0.05f;
-	if (key == 'D') cameraPosition.x += 0.05f;
+	if (key == 'W' && cameraPosition.z > 1) cameraPosition.z -= 0.05f;
+	if (key == 'S' && cameraPosition.z < 15) cameraPosition.z += 0.05f;
+	if (key == 'A' && cameraPosition.x > -15) cameraPosition.x -= 0.05f;
+	if (key == 'D' && cameraPosition.x < 15) cameraPosition.x += 0.05f;
 
 	if (key == 'O' || key == '9')
 	{
